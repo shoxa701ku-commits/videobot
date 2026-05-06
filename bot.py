@@ -8,7 +8,6 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, Con
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-import os
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "8497889306:AAGopPlx_NoU0x6ru6o8qa6RnULy_LOOV0I")
 
 URL_PATTERN = r"https?://[^\s]+"
@@ -36,8 +35,7 @@ def download(url):
         "no_warnings": True,
         "http_headers": HEADERS,
         "merge_output_format": "mp4",
-        # Chrome brauzeridan avtomatik cookies oladi
-        "cookiesfrombrowser": ("chrome",),
+        "cookiefile": "cookies.txt" if os.path.exists("cookies.txt") else None,
     }
 
     with yt_dlp.YoutubeDL(opts) as ydl:
